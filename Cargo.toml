@@ -1,0 +1,31 @@
+[package]
+name = "gts"
+version = "0.1.0"
+edition = "2024"
+description = "Multiple independent Git histories per workspace via .git symlink tracks"
+license = "MIT"
+repository = "https://github.com/hzw1199/gts"
+homepage = "https://github.com/hzw1199/gts"
+
+[[bin]]
+name = "gts"
+path = "src/main.rs"
+
+[lib]
+name = "gts"
+path = "src/lib.rs"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+cliclack = "0.5"
+dirs = "7.0.0"
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1"
+uuid = { version = "1.26.1", features = ["v4"] }
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
