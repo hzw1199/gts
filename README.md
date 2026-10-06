@@ -1,10 +1,16 @@
 # gts
 
-Multiple independent Git histories in one workspace. Each history is a track: a full Git directory stored outside the worktree. The workspace `.git` entry is an absolute symlink to the active track. Switching tracks replaces that symlink. Files in the worktree stay put, so the same edits become a different diff under the next history.
+![One folder, a dev history and a release history](images/banner.png)
 
-This repository is the command-line tool. The desktop app that calls it is [gts-ui](https://github.com/hzw1199/gts-ui).
+One folder. A separate Git history for what you publish, and another for the work that stays here. Switching tracks changes which history this directory belongs to. The files stay where they are, so the editor and the dev server stay open.
 
-`gts` does not add worktrees, sparse checkout, or extra remotes. Shared ignore rules stay in the workspace `.gitignore`. Per-track ignores live in that track’s `info/exclude`.
+- **Publish one history, keep another.** Each track has its own commits and its own remote. This directory does not change.
+- **Commit the current edits onto the other history.** After a switch they are a different diff against that track's `HEAD`.
+- **Ignore different local files on each history.** Per-track rules live in `info/exclude`. The workspace `.gitignore` stays shared.
+
+Switching does not check out the other history's files.
+
+This repository is the command-line tool. The desktop app is [gts-ui](https://github.com/hzw1199/gts-ui).
 
 ## Requirements
 
@@ -38,6 +44,12 @@ chmod +x gts
 mkdir -p "$HOME/.local/bin"
 mv gts "$HOME/.local/bin/gts"
 ```
+
+## How a switch works
+
+Each history is a track: a full Git directory stored outside the worktree. The workspace `.git` entry is an absolute symlink to the active track. Switching tracks replaces that symlink. Files in the worktree stay put, so the same edits become a different diff under the next history.
+
+`gts` does not add worktrees, sparse checkout, or extra remotes. Shared ignore rules stay in the workspace `.gitignore`. Per-track ignores live in that track’s `info/exclude`.
 
 ## Storage
 
